@@ -1,0 +1,8 @@
+flowcell:
+    "FLO-MIN106"
+kit:
+    "SQK-LSK108"
+threads:
+    32
+contamination_reference:
+    "data/reference/remove_contam_map-ont.mm2"
