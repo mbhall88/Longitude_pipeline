@@ -16,7 +16,8 @@ RULES_SUBDIR = ""
 if MULTIPLEXED:
     rule all:
         input:
-
+            expand("data/sorted/{barcode}_sorted.bam", barcode=BARCODES),
+            expand("data/sorted/{barcode}_sorted.bam.bai", barcode=BARCODES)
 
     RULES_SUBDIR = "demultiplex"
 else:
