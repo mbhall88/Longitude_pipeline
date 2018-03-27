@@ -14,7 +14,7 @@ rule demultiplex_map_minimap2:
         mem_mb=6000
     shell:
         "(minimap2 -t {threads} -ax map-ont {input.reference} {input.reads} | "
-        "samtools view -b - > {output}) 2> {log}"
+        "samtools view -F 0x4 -b - > {output}) 2> {log}"
 
 
 rule demultiplex_samtools_sort:
@@ -39,3 +39,13 @@ rule demultiplex_samtools_index:
         "logs/samtools_index_{barcode}.log"
     shell:
         "samtools index -b {input} 2> {log}"
+
+rule demultiplex_bam_to_fastq:
+    input:
+        "data/sorted/{barcode}_sorted.bam"
+    output:
+        "data/filtered/{barcode}_filtered.fastq.gz"
+    log:
+        "logs/bam_to_fastq_{barcode}.log"
+    shell:
+        "samtools fastq -F 0x4 {input} > {output} 2> {log}"
