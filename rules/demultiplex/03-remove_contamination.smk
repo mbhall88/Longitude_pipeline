@@ -3,7 +3,7 @@ singularity: "containers/nanoporeqc.simg"
 rule demultiplex_map_minimap2:
     input:
         reads=expand("data/porechopped/{barcode}.fastq.gz", barcode=BARCODES),
-        reference=config["contamination_reference"]
+        reference=config["tb_reference"]
     output:
         temp("data/mapped/{barcode}.bam")
     threads:
@@ -11,10 +11,10 @@ rule demultiplex_map_minimap2:
     log:
         "logs/minimap2_{barcode}.log"
     resources:
-        mem_mb=16000
+        mem_mb=6000
     shell:
-        "minimap2 -t {threads} -ax map-ont {input.reference} {input.reads} "
-        "2> {log} | samtools view -b - > {output}"
+        "(minimap2 -t {threads} -ax map-ont {input.reference} {input.reads} | "
+        "samtools view -b - > {output}) 2> {log}"
 
 
 rule demultiplex_samtools_sort:

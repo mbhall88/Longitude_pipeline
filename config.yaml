@@ -6,3 +6,5 @@ threads:
     32
 contamination_reference:
     "data/reference/remove_contam_map-ont.mm2"
+tb_reference:
+    "data/reference/NC_000962.3.fa"

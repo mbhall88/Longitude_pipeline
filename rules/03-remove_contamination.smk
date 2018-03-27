@@ -3,7 +3,7 @@ singularity: "containers/nanoporeqc.simg"
 rule map_minimap2:
     input:
         reads="data/porechopped/albacore_passed_porechop.fastq.gz",
-        reference=config["contamination_reference"]
+        reference=config["tb_reference"]
     output:
         temp("data/mapped/albacore_passed_porechop.bam")
     threads:
