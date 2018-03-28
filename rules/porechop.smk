@@ -1,8 +1,8 @@
 rule porechop:
     input:
-        "data/basecalled/{SAMPLE}_merged.fastq.gz"
+        "data/basecalled/{sample}_merged.fastq.gz".format(sample=SAMPLE)
     output:
-        "data/porechopped/{SAMPLE}_porechop.fastq.gz"
+        "data/porechopped/{sample}_porechop.fastq.gz".format(sample=SAMPLE)
     singularity:
         "containers/nanoporeqc.simg"
     threads: config["threads"]

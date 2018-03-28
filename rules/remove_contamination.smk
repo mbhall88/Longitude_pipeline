@@ -54,4 +54,4 @@ rule bam_to_fastq:
     singularity:
         config["containers"]["nanoporeqc"]
     shell:
-        "samtools fastq -F 0x4 {input} > {output} 2> {log}"
+        "(samtools fastq -F 0x4 {input} | gzip > {output}) 2> {log}"

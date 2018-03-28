@@ -25,13 +25,13 @@ if MULTIPLEXED:
 else:
     rule all:
         input:
-            "data/mykrobe/{SAMPLE}_predict.json".format(SAMPLE=SAMPLE),
-            "data/sorted/{SAMPLE}_sorted.bam.bai".format(SAMPLE=SAMPLE)
+            "report.html"
 
 
 rules_dir = os.path.join('rules', RULES_SUBDIR)
 
-include: os.path.join(rules_dir, '01-basecall.smk')
-include: os.path.join(rules_dir, '02-porechop.smk')
-include: os.path.join(rules_dir, '03-remove_contamination.smk')
-include: os.path.join(rules_dir, '04-mykrobe.smk')
+include: os.path.join(rules_dir, 'basecall.smk')
+include: os.path.join(rules_dir, 'porechop.smk')
+include: os.path.join(rules_dir, 'remove_contamination.smk')
+include: os.path.join(rules_dir, 'mykrobe.smk')
+include: os.path.join(rules_dir, 'reports.smk')
