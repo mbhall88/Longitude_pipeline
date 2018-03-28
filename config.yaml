@@ -8,3 +8,7 @@ contamination_reference:
     "data/reference/remove_contam_map-ont.mm2"
 tb_reference:
     "data/reference/NC_000962.3.fa"
+containers:
+    albacore: "containers/albacore.simg"
+    nanoporeqc: "containers/nanoporeqc.simg"
+    mykrobe: "containers/mykrobe.simg"

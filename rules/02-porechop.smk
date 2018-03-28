@@ -1,8 +1,8 @@
 rule porechop:
     input:
-        "data/basecalled/albacore_passed.fastq.gz"
+        "data/basecalled/{SAMPLE}_merged.fastq.gz"
     output:
-        "data/porechopped/albacore_passed_porechop.fastq.gz"
+        "data/porechopped/{SAMPLE}_porechop.fastq.gz"
     singularity:
         "containers/nanoporeqc.simg"
     threads: config["threads"]

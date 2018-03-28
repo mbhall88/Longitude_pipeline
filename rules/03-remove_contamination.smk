@@ -1,41 +1,57 @@
-singularity: "containers/nanoporeqc.simg"
-
 rule map_minimap2:
     input:
-        reads="data/porechopped/albacore_passed_porechop.fastq.gz",
-        reference=config["tb_reference"]
+        config["tb_reference"],
+        "data/porechopped/{SAMPLE}_porechop.fastq.gz"
     output:
-        temp("data/mapped/albacore_passed_porechop.bam")
+        temp("data/mapped/{SAMPLE}.bam")
     threads:
         config["threads"]
     log:
         "logs/minimap2.log"
+    singularity:
+        config["containers"]["nanoporeqc"]
     resources:
-        mem_mb=16000
+        mem_mb=12000
     shell:
-        "minimap2 -t {threads} -ax map-ont {input.reference} {input.reads} "
-        "2> {log} | samtools view -b - > {output}"
+        "(minimap2 -t {threads} -ax map-ont {input} | "
+        "samtools view -b - > {output}) 2> {log}"
 
 
 rule samtools_sort:
     input:
-        "data/mapped/albacore_passed_porechop.bam"
+        "data/mapped/{SAMPLE}.bam"
     output:
-        "data/mapped/albacore_passed_porechop_sorted.bam"
+        "data/sorted/{SAMPLE}_sorted.bam"
     threads:
         config["threads"]
     log:
         "logs/samtools_sort.log"
+    singularity:
+        config["containers"]["nanoporeqc"]
     shell:
         "samtools sort -@ {threads} {input} 2> {log} > {output}"
 
 
 rule samtools_index:
     input:
-        "data/mapped/albacore_passed_porechop_sorted.bam"
+        "data/sorted/{SAMPLE}_sorted.bam"
     output:
-        "data/mapped/albacore_passed_porechop_sorted.bam.bai"
+        "data/sorted/{SAMPLE}_sorted.bam.bai"
     log:
         "logs/samtools_index.log"
+    singularity:
+        config["containers"]["nanoporeqc"]
     shell:
         "samtools index -b {input} 2> {log}"
+
+rule bam_to_fastq:
+    input:
+        "data/sorted/{SAMPLE}_sorted.bam"
+    output:
+        "data/filtered/{SAMPLE}_filtered.fastq.gz"
+    log:
+        "logs/bam_to_fastq.log"
+    singularity:
+        config["containers"]["nanoporeqc"]
+    shell:
+        "samtools fastq -F 0x4 {input} > {output} 2> {log}"

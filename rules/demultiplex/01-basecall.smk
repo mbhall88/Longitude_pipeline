@@ -7,7 +7,7 @@ rule demultiplex_basecall_albacore:
         kit=config["kit"],
         flowcell=config["flowcell"],
     singularity:
-        "containers/albacore.simg"
+        config["containers"]["albacore"]
     threads: 32
     resources:
         mem_mb=16000

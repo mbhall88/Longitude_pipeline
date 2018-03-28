@@ -4,7 +4,7 @@ rule demultiplex_porechop:
     output:
         expand("data/porechopped/{barcode}.fastq.gz", barcode=BARCODES)
     singularity:
-        "containers/nanoporeqc.simg"
+        config["containers"]["nanoporeqc"]
     threads: config["threads"]
     log:
         "logs/porechop.log"
