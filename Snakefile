@@ -33,7 +33,9 @@ rule all:
     input:
         expand("report_{sample}.html", sample=SAMPLES)
 
-include: 'rules/basecall.smk'
+# uncomment below line if basecalling with albacore is required
+# include: 'rules/basecall.smk'
+
 include: 'rules/porechop.smk'
 include: 'rules/remove_contamination.smk'
 include: 'rules/mykrobe.smk'

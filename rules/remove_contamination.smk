@@ -11,8 +11,6 @@ rule map_minimap2:
         "logs/minimap2_{sample}.log"
     singularity:
         config["containers"]["nanoporeqc"]
-    resources:
-        mem_mb=12000
     shell:
         "(minimap2 -t {threads} -ax map-ont {input} | "
         "samtools view -b - > {output}) 2> {log}"
