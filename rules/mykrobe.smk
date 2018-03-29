@@ -1,4 +1,4 @@
-rule demultiplex_mykrobe:
+rule mykrobe:
     input:
         "data/filtered/{sample}_filtered.fastq.gz"
     output:
