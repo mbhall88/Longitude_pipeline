@@ -74,7 +74,7 @@ If one of these fails, you can build from scratch. Let's say in the above the co
 
 It will take a few minutes for each container to build from scratch.
 
-If for some reason you have named the containers differently (**not recommended**) then you will need to update the relevant field in the ``config.yaml`` file.
+If you will be using this pipeline on multiple different experiments than it is probably best if you put these containers in a central location. Due to their large size (~1GB each) downloading them for each experiment would be a waste of space. If you prefer to take this route then see the containers instructions in the `Config file`_ section below.
 
 Moving/copying reads into correct directory
 --------------------------------------------
@@ -106,6 +106,20 @@ If you are working with multiplexed samples (barcoded) then your directory that 
     mv /path/to/dir/containing/barcode/dirs/* .
     cd ${project_dir}
 
+**Basecalling required**
+
+If basecalling is required from the pipeline then you need to do two things. First, change the ``basecall`` field to ``true`` within the config file (see below). Second, move your fast5 files into the pipeline directory.
+
+.. code-block:: bash
+
+    # make the directory we will move the reads into
+    mkdir -p ${project_dir}/data/reads
+    cd ${project_dir}/data/reads
+    mv /path/to/dir/containing/fast5/files/* .
+    cd ${project_dir}
+
+If they are multiplexed then you must fill in the appropriate fields in the config file (see below).
+
 Config file
 --------------
 The only file you should need to alter within the pipeline is ``config.yaml``. Open this file up in a text editor and change the following fields, if necessary:
@@ -113,10 +127,12 @@ The only file you should need to alter within the pipeline is ``config.yaml``. O
 * **multiplexed** - Default is ``false``. Change to ``true`` if sample is multiplexed. If set to ``true`` then you **MUST** enter information for ``barcodes`` as well (see below).
 * **sample_name** - If ``multiplexed`` is set to ``false`` then this is the name of your sample. **Note: this MUST be the value of** ``experiment`` **we defined at the start of the installation instructions**. If ``multiplexed`` is set to ``true`` then ignore this field.
 * **barcodes** - If ``multiplexed`` is set to ``true`` then this needs to be a **space-separated** string of the expected barcodes (the ones you used in the experiment). An example of barcodes 01-05 is provided. These **MUST** follow the same format of ``BC`` followed by 2 digits. If ``multiplexed`` is set to ``false`` then ignore this field.
+* **basecall** - If you have not previously basecalled your data and want to do so as part of the pipeline then set the value to ``true`` and basecalling will be done with albacore. Default is ``false``.
 * **threads** - Maximum number of threads to use for each process. Default is 1.
 * **tb_reference** - You shouldn't need to change this as the latest reference comes with the repository.
 * **flowcell** - You should only need to fill this in if you are also using this pipeline to basecall. The flowcell used (if known). Default is "FLO-MIN106"
 * **kit** - You should only need to fill this in if you are also using this pipeline to basecall. The sequencing kit used (if known). Default is "SQK-LSK108"
+* **containers** - If you have downloaded/built the Singularity containers elsewhere as you will be using them for multiple samples then change the paths for each container to the location you have them stored at. If you want to avoid changing this you could symlink the containers into the pipeline ``containers/`` directory.
 
 Run
 ======
@@ -133,11 +149,13 @@ Visualisation of pipeline
 ==========================
 Without demultiplexing
 -----------------------
+If basecalling is not requested then the pipeline starts at ``porechop``.
 
 .. image:: ./docs/imgs/dag.png
 
 With demultiplexing
 ---------------------
+If basecalling is not requested then the pipeline starts at ``porechop``.
 
 .. image:: ./docs/imgs/demultiplex_dag.png
 

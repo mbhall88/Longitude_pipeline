@@ -1,6 +1,7 @@
 multiplexed: false
 sample_name: "SAMPLE_NAME"
 barcodes: "BC01 BC02 BC03 BC04 BC05"
+basecall: false
 
 flowcell: "FLO-MIN106"
 kit: "SQK-LSK108"
