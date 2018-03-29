@@ -10,18 +10,14 @@ MULTIPLEXED = True
 if MULTIPLEXED:
     # change to appropriate barcode labels
     BARCODES = ["BC01", "BC02", "BC03", "BC04", "BC05"]
-else:
-    # ENTER SAMPLE NAME
-    SAMPLE = "test"
-
-RULES_SUBDIR = ""
-if MULTIPLEXED:
+    RULES_SUBDIR = "demultiplex"
     rule all:
         input:
             expand("report_{barcode}.html", barcode=BARCODES)
-
-    RULES_SUBDIR = "demultiplex"
 else:
+    # ENTER SAMPLE NAME
+    SAMPLE = "test"
+    RULES_SUBDIR = ""
     rule all:
         input:
             "report.html"

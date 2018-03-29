@@ -1,6 +1,6 @@
 rule plot_pre_filtering:
     input:
-        expand("data/porechopped/{barcode}.fastq.gz", barcode=BARCODES)
+        "data/porechopped/{barcode}.fastq.gz"
     output:
         "data/plots/{barcode}_pre_filtering.pdf"
     singularity:
@@ -27,7 +27,7 @@ rule plot_post_filtering:
 
 rule stats_pre_filtering:
     input:
-        expand("data/porechopped/{barcode}.fastq.gz", barcode=BARCODES)
+        "data/porechopped/{barcode}.fastq.gz"
     output:
         "data/stats/{barcode}_pre_filtering.txt"
     singularity:
@@ -63,7 +63,7 @@ rule report:
         plot_post="data/plots/{barcode}_post_filtering.pdf",
         stats_pre="data/stats/{barcode}_pre_filtering.txt",
         stats_post="data/stats/{barcode}_post_filtering.txt",
-        mykrobe="data/mykrobe/{barcode}_predict.json",
+        mykrobe="data/mykrobe/{barcode}/{barcode}_predict.json",
         porechop_log="logs/porechop.log"
     output:
         "report_{barcode}.html"
