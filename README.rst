@@ -134,12 +134,12 @@ Visualisation of pipeline
 Without demultiplexing
 -----------------------
 
-.. image:: https://github.com/mbhall88/Longitude_pipeline/blob/master/docs/imgs/dag.pdf
+.. image:: ./docs/imgs/dag.png
 
 With demultiplexing
 ---------------------
 
-.. image:: https://github.com/mbhall88/Longitude_pipeline/blob/master/docs/imgs/demultiplex_dag.pdf
+.. image:: ./docs/imgs/demultiplex_dag.png
 
 
 .. _`Mykrobe predict`: http://www.mykrobe.com/products/predictor/
