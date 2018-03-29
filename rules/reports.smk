@@ -67,6 +67,8 @@ rule report:
         porechop_log="logs/porechop.log"
     output:
         "report.html"
+    log:
+        "logs/report.log"
     params:
         sample=SAMPLE
     script:

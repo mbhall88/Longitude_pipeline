@@ -67,7 +67,9 @@ rule report:
         porechop_log="logs/porechop.log"
     output:
         "report_{barcode}.html"
+    log:
+        "logs/report_{barcode}.log"
     params:
         sample="{barcode}"
     script:
-        "../scripts/report.py"
+        "../../scripts/report.py"

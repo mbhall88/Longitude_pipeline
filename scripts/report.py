@@ -1,6 +1,25 @@
 import json
 import os
+import sys
 from snakemake.utils import report
+
+
+# capture all stderr messages in log file
+class Logger(object):
+    """Class to capture stderr in log file"""
+    def __init__(self, log_path):
+        self.log = open(log_path, "w")
+
+    def write(self, message):
+        self.log.write(message)
+
+    def flush(self):
+        #this flush method is needed for python 3 compatibility.
+        #this handles the flush command by doing nothing.
+        #you might want to specify some extra behavior here.
+        pass
+
+sys.stderr = Logger(snakemake.log[0])
 
 
 def mykrobe_overview(filepath: str) -> str:
@@ -26,6 +45,7 @@ def get_num_reads(stats_file: str) -> int:
                 num_reads = line.split()[-1]
     return int(num_reads)
 
+
 reference = os.path.splitext(os.path.basename(snakemake.config["tb_reference"]))[0]
 mykrobe_report = mykrobe_overview(snakemake.input.mykrobe)
 num_reads_pre_filter = get_num_reads(snakemake.input.stats_pre)
@@ -44,7 +64,7 @@ Report for {sample}
 
 Quality Control
 ===================================
-1. Porechop_ was run to trim adapter sequences from reads and discard reads with adapters found in the middle. More detailing information can be found in `porechop_log`_. For quality control plots of the reads after this step, see `plot_pre`_.
+1. Porechop_ was run to trim adapter sequences from reads and discard reads with adapters found in the middle. More detailed information can be found in `porechop_log`_. For quality control plots of the reads after this step, see `plot_pre`_.
 2. Reads were aligned to the TB reference {reference} using Minimap2_.
 3. All reads which did not map to {reference} were removed. Prior to filtering there were {num_reads_pre_filter} reads. After filtering there remains {num_reads_post_filter}. This means {percent_reads_mapped}% of reads mapped to {reference}. For more stats on the pre-filtered reads see `stats_pre`_ and for post-filtered reads see `stats_post`_. For quality control plots of the reads after this step (and read percent identity to {reference}) see `plot_post`_. Stats were produced with NanoStat_ and plots with Pistis_.
 
