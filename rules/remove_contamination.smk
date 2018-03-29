@@ -1,13 +1,14 @@
 rule map_minimap2:
     input:
         config["tb_reference"],
-        "data/porechopped/{SAMPLE}_porechop.fastq.gz"
+        "data/porechopped/{sample}.fastq.gz"
+
     output:
-        temp("data/mapped/{SAMPLE}.bam")
+        temp("data/mapped/{sample}.bam")
     threads:
         config["threads"]
     log:
-        "logs/minimap2.log"
+        "logs/minimap2_{sample}.log"
     singularity:
         config["containers"]["nanoporeqc"]
     resources:
@@ -19,13 +20,13 @@ rule map_minimap2:
 
 rule samtools_sort:
     input:
-        "data/mapped/{SAMPLE}.bam"
+        "data/mapped/{sample}.bam"
     output:
-        "data/sorted/{SAMPLE}_sorted.bam"
+        "data/sorted/{sample}_sorted.bam"
     threads:
         config["threads"]
     log:
-        "logs/samtools_sort.log"
+        "logs/samtools_sort_{sample}.log"
     singularity:
         config["containers"]["nanoporeqc"]
     shell:
@@ -34,11 +35,11 @@ rule samtools_sort:
 
 rule samtools_index:
     input:
-        "data/sorted/{SAMPLE}_sorted.bam"
+        "data/sorted/{sample}_sorted.bam"
     output:
-        "data/sorted/{SAMPLE}_sorted.bam.bai"
+        "data/sorted/{sample}_sorted.bam.bai"
     log:
-        "logs/samtools_index.log"
+        "logs/samtools_index_{sample}.log"
     singularity:
         config["containers"]["nanoporeqc"]
     shell:
@@ -46,11 +47,11 @@ rule samtools_index:
 
 rule bam_to_fastq:
     input:
-        "data/sorted/{SAMPLE}_sorted.bam"
+        "data/sorted/{sample}_sorted.bam"
     output:
-        "data/filtered/{SAMPLE}_filtered.fastq.gz"
+        "data/filtered/{sample}_filtered.fastq.gz"
     log:
-        "logs/bam_to_fastq.log"
+        "logs/bam_to_fastq_{sample}.log"
     singularity:
         config["containers"]["nanoporeqc"]
     shell:

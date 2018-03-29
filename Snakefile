@@ -23,26 +23,18 @@ def barcode_parser(barcodes_string):
 
 # if multiplexed, add expected barcodes
 MULTIPLEXED = config["multiplexed"]
+
 if MULTIPLEXED:
-    # change to appropriate barcode labels
-    BARCODES = barcode_parser(config["barcodes"])
-    RULES_SUBDIR = "demultiplex"
-    rule all:
-        input:
-            expand("report_{barcode}.html", barcode=BARCODES)
+    SAMPLES = barcode_parser(config["barcodes"])
 else:
-    # ENTER SAMPLE NAME
-    SAMPLE = [config["sample_name"]]
-    RULES_SUBDIR = ""
-    rule all:
-        input:
-            expand("report_{sample}.html", sample=SAMPLE)
+    SAMPLES = [config["sample_name"]]
 
+rule all:
+    input:
+        expand("report_{sample}.html", sample=SAMPLES)
 
-rules_dir = os.path.join('rules', RULES_SUBDIR)
-
-include: os.path.join(rules_dir, 'basecall.smk')
-include: os.path.join(rules_dir, 'porechop.smk')
-include: os.path.join(rules_dir, 'remove_contamination.smk')
-include: os.path.join(rules_dir, 'mykrobe.smk')
-include: os.path.join(rules_dir, 'reports.smk')
+include: 'rules/basecall.smk'
+include: 'rules/porechop.smk'
+include: 'rules/remove_contamination.smk'
+include: 'rules/mykrobe.smk'
+include: 'rules/reports.smk'
