@@ -1,7 +1,7 @@
 barcodes:
     "BC01 BC02 BC03 BC04 BC05"
 multiplexed:
-    false
+    true
 sample_name:
     "sample"
 
@@ -11,10 +11,8 @@ kit:
     "SQK-LSK108"
 threads:
     32
-contamination_reference:
-    "data/reference/remove_contam_map-ont.mm2"
 tb_reference:
-    "data/reference/NC_000962.3.fa"
+    "data/reference/NC_000962.3.fa.gz"
 containers:
     albacore: "containers/albacore.simg"
     nanoporeqc: "containers/nanoporeqc.simg"

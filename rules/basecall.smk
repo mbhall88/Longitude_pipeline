@@ -20,7 +20,7 @@ rule basecall_albacore:
 if not MULTIPLEXED:
     rule concat_and_gzip_fastq:
         input:
-            "data/basecalled/workspace/pass/"
+            "data/basecalled/workspace/pass"
         output:
             "data/basecalled/{sample}.fastq.gz"
         shell:

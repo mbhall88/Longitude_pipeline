@@ -1,14 +1,27 @@
+if MULTIPLEXED:
+    INPUT = "data/basecalled/workspace/pass"
+else:
+    INPUT = expand("data/basecalled/{sample}.fastq.gz", sample=SAMPLES)
+
+
+def determine_output_format(wildcards, output):
+    if MULTIPLEXED:
+        result = "--barcode_dir data/porechopped"
+    else:
+        result = "--output {output}".format(output=output[0])
+    return result
+
+
 rule porechop:
     input:
-        "data/basecalled/{sample}.fastq.gz"
+        INPUT
     output:
-        "data/porechopped/{sample}.fastq.gz"
+        expand("data/porechopped/{sample}.fastq.gz", sample=SAMPLES)
     singularity:
         "containers/nanoporeqc.simg"
     threads: config["threads"]
     params:
-        output_type=("--barcode_dir data/porechopped" if MULTIPLEXED
-                     else "--output {output}"),
+        output_type=determine_output_format,
         unassigned=("--discard_unassigned" if MULTIPLEXED else "")
     log:
         "logs/porechop.log"
