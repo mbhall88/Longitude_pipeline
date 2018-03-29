@@ -111,7 +111,7 @@ Config file
 The only file you should need to alter within the pipeline is ``config.yaml``. Open this file up in a text editor and change the following fields, if necessary:
 
 * **multiplexed** - Default is ``false``. Change to ``true`` if sample is multiplexed. If set to ``true`` then you **MUST** enter information for ``barcodes`` as well (see below).
-* **sample_name** - If ``multiplexed`` is set to ``false`` then this is the name of your sample. **Note: this MUST be the value of ``experiment`` we defined at the start of the installation instructions**. If ``multiplexed`` is set to ``true`` then ignore this field.
+* **sample_name** - If ``multiplexed`` is set to ``false`` then this is the name of your sample. **Note: this MUST be the value of** ``experiment`` **we defined at the start of the installation instructions**. If ``multiplexed`` is set to ``true`` then ignore this field.
 * **barcodes** - If ``multiplexed`` is set to ``true`` then this needs to be a **space-separated** string of the expected barcodes (the ones you used in the experiment). An example of barcodes 01-05 is provided. These **MUST** follow the same format of ``BC`` followed by 2 digits. If ``multiplexed`` is set to ``false`` then ignore this field.
 * **threads** - Maximum number of threads to use for each process. Default is 1.
 * **tb_reference** - You shouldn't need to change this as the latest reference comes with the repository.
