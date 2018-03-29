@@ -1,3 +1,10 @@
+barcodes:
+    "BC01 BC02 BC03 BC04 BC05"
+multiplexed:
+    false
+sample_name:
+    "sample"
+
 flowcell:
     "FLO-MIN106"
 kit:
