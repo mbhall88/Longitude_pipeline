@@ -10,4 +10,4 @@ rule mykrobe:
         "logs/mykrobe_{sample}.log"
     shell:
         "scripts/run_mykrobe.sh {wildcards.sample} {params.species} {input} "
-        "{log} {output} {params.container}"
+        "{output} {params.container} 2> {log}"

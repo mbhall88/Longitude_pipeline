@@ -14,7 +14,7 @@ To achieve this, the pipeline does the following:
 
 Installation
 ========================================
-**Note:** the following instructions assume you are working on a Linux operating system.
+**Note: the following instructions assume you are working on a Linux operating system and have Python version 3.5 or greater.**
 
 The first thing to do is download this repository onto the machine you want to run the analysis on. In the spirit of making everything reproducible and tidy I would advice to download this repository (or copy the blank version) once for each nanopore experiment you want to analyse.
 
@@ -96,7 +96,7 @@ This will combine all of the fastq files into a single, compressed file named ac
 
 **Barcoded sample**
 
-If you are working with multiplexed samples (barcoded) then your directory that the basecalling was done into should contain subdirectories named after the barcode they were binned into by the basecaller. You will need to moved these directories (in exampe below) to a directory in the experiment pipeline. If you did not selected the barcoding option for basecalling, but the samples are barcoded, then do the following for the fastq files produced by the basecalling. Note: we only work with files in the "pass" directory (if there is one).
+If you are working with multiplexed samples (barcoded) then your directory that the basecalling was done into should contain subdirectories named after the barcode they were binned into by the basecaller. You will need to moved these directories (in exampe below) to a directory in the experiment pipeline. If you did not selected the barcoding option for basecalling, but the samples are barcoded, then do the following for the fastq files produced by the basecalling. Note: we only work with files in the "pass" directory (if there is one). Additionally, if you did not basecall the data with the demultiplexing option, then just place
 
 .. code-block:: bash
 
