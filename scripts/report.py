@@ -36,7 +36,7 @@ def mykrobe_overview(filepath: str) -> dict:
     return data[sample_id].get('susceptibility', {})
 
 def mykrobe_rst_list(data: dict) -> str:
-    """Formats the Mykrobe data into a restructuredtext unordered list.""""
+    """Formats the Mykrobe data into a restructuredtext unordered list."""
     result = ''
     for drug in data:
         drug_info = data.get(drug)
