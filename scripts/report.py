@@ -51,7 +51,7 @@ def mykrobe_rst_list(data):
                 alt_coverage = coverage.get('alternate', '').get('median_depth', '')
                 result += 'Called by: {var}\n\t\t'.format(var=var)
                 result += 'Reference median depth: {ref_coverage}\n\t\t'.format(ref_coverage=ref_coverage)
-                result += 'Alternate median depth: {alt_coverage}'.format(alt_coverage=alt_coverage)
+                result += 'Alternate median depth: {alt_coverage}\n'.format(alt_coverage=alt_coverage)
     return result
 
 
