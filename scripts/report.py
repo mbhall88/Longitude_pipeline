@@ -22,19 +22,38 @@ class Logger(object):
 sys.stderr = Logger(snakemake.log[0])
 
 
-def mykrobe_overview(filepath: str) -> str:
+def mykrobe_overview(filepath: str) -> dict:
     """Extracts the susceptiblity information from mykrobe predict json.
 
     :param filepath: path to mykrobe predict output json file.
 
-    :returns A json formatted string showing drug name and susceptibility. If
-    susceptibility is resistant 'R', then information on the variant is given.
+    :returns A dictionary of the susceptibility results.
 
     """
     sample_id = os.path.basename(filepath).split('.')[0].split('_')[0]
     with open(filepath, 'r') as mykrobe_json:
         data = json.load(mykrobe_json)
-    return json.dumps(data[sample_id]['susceptibility'], indent=4)
+    return data[sample_id].get('susceptibility', {})
+
+def mykrobe_rst_list(data):
+    result = ''
+    for drug in data:
+        drug_info = data.get(drug)
+        predict = drug_info.get('predict', '')
+        if predict == 'S':
+            result += '- **{drug}**\n\tPrediction: **Susceptible**\n'.format(drug=drug)
+        elif predict == 'R':
+            called_by = list(drug_info.get('called_by', []))
+            result += '- **{drug}**\n\tPrediction: **Resistant**\n\t'.format(drug=drug)
+            for var in called_by:
+                coverage = drug_info.get('called_by').get(var).get('info', '').get('coverage', '')
+                ref_coverage = coverage.get('reference', '').get('median_depth', '')
+                alt_coverage = coverage.get('alternate', '').get('median_depth', '')
+                result += 'Called by: {var}\n\t\t'.format(var=var)
+                result += 'Reference median depth: {ref_coverage}\n\t\t'.format(ref_coverage=ref_coverage)
+                result += 'Alternate median depth: {alt_coverage}'.format(alt_coverage=alt_coverage)
+    return result
+
 
 
 def get_num_reads(stats_file: str) -> int:
@@ -47,7 +66,7 @@ def get_num_reads(stats_file: str) -> int:
 
 
 reference = os.path.splitext(os.path.basename(snakemake.config["tb_reference"]))[0]
-mykrobe_report = mykrobe_overview(snakemake.input.mykrobe)
+mykrobe_report = mykrobe_rst_list(mykrobe_overview(snakemake.input.mykrobe))
 num_reads_pre_filter = get_num_reads(snakemake.input.stats_pre)
 num_reads_post_filter = get_num_reads(snakemake.input.stats_post)
 percent_reads_mapped = round(num_reads_post_filter / num_reads_pre_filter * 100, 2)
