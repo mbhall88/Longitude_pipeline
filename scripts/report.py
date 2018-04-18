@@ -35,7 +35,8 @@ def mykrobe_overview(filepath: str) -> dict:
         data = json.load(mykrobe_json)
     return data[sample_id].get('susceptibility', {})
 
-def mykrobe_rst_list(data):
+def mykrobe_rst_list(data: dict) -> str:
+    """Formats the Mykrobe data into a restructuredtext unordered list.""""
     result = ''
     for drug in data:
         drug_info = data.get(drug)
@@ -53,7 +54,6 @@ def mykrobe_rst_list(data):
                 result += '    - Reference median depth: {ref_coverage}\n'.format(ref_coverage=ref_coverage)
                 result += '    - Alternate median depth: {alt_coverage}\n'.format(alt_coverage=alt_coverage)
     return result
-
 
 
 def get_num_reads(stats_file: str) -> int:
@@ -89,7 +89,7 @@ Quality Control
 
 Mykrobe Analysis
 ===================================
-A summary of the susceptiblity information from `Mykrobe predict`_ is shown here. For the full report, see mykrobe_. 'S' means susceptible and 'R' means resistant. If resistance is identified for a drug then the predicted responsible variant is given, along with supporting information.
+A summary of the susceptiblity information from `Mykrobe predict`_ is shown here. For the full report, see mykrobe_. If resistance is identified for a drug then the predicted responsible variant(s) is given, along with supporting information.
 
 {mykrobe_report}
 
