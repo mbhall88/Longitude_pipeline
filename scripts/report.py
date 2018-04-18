@@ -41,17 +41,17 @@ def mykrobe_rst_list(data):
         drug_info = data.get(drug)
         predict = drug_info.get('predict', '')
         if predict == 'S':
-            result += '- **{drug}**\n\tPrediction: **Susceptible**\n'.format(drug=drug)
+            result += '- **{drug}** \n    Prediction: **Susceptible** \n'.format(drug=drug)
         elif predict == 'R':
             called_by = list(drug_info.get('called_by', []))
-            result += '- **{drug}**\n\tPrediction: **Resistant**\n\t'.format(drug=drug)
+            result += '- **{drug}** \n    Prediction: **Resistant** \n    '.format(drug=drug)
             for var in called_by:
                 coverage = drug_info.get('called_by').get(var).get('info', '').get('coverage', '')
                 ref_coverage = coverage.get('reference', '').get('median_depth', '')
                 alt_coverage = coverage.get('alternate', '').get('median_depth', '')
-                result += 'Called by: {var}\n\t\t'.format(var=var)
-                result += 'Reference median depth: {ref_coverage}\n\t\t'.format(ref_coverage=ref_coverage)
-                result += 'Alternate median depth: {alt_coverage}\n'.format(alt_coverage=alt_coverage)
+                result += 'Called by: {var} \n        '.format(var=var)
+                result += 'Reference median depth: {ref_coverage} \n        '.format(ref_coverage=ref_coverage)
+                result += 'Alternate median depth: {alt_coverage} \n '.format(alt_coverage=alt_coverage)
     return result
 
 
