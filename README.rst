@@ -63,8 +63,9 @@ To pull them from Singularity Hub (recommended):
     project_dir=$(pwd)
     cd ${project_dir}/containers
     singularity pull --force --name nanoporeqc.simg shub://mbhall88/Singularity_recipes:nanoporeqc
-    singularity pull --force --name albacore.simg shub://mbhall88/Singularity_recipes:albacore
     singularity pull --force --name mykrobe.simg shub://mbhall88/Singularity_recipes:mykrobe
+
+If you need a container for basecalling with Albacore, please contact me.
 
 If one of these fails, you can build from scratch. Let's say in the above the container named `mykrobe.simg` failed. To build this from scratch we use the recipe `Singularity.mykrobe` inside the `recipes` directory to build from:
 
@@ -96,7 +97,7 @@ This will combine all of the fastq files into a single, compressed file named ac
 
 **Barcoded sample**
 
-If you are working with multiplexed samples (barcoded) then your directory that the basecalling was done into should contain subdirectories named after the barcode they were binned into by the basecaller. You will need to move these directories (in exampe below) to a directory in the experiment pipeline. If you did not select the barcoding option for basecalling, but the samples are barcoded, then do the following for the fastq files produced by the basecalling. Note: we only work with files in the "pass" directory (if there is one). 
+If you are working with multiplexed samples (barcoded) then your directory that the basecalling was done into should contain subdirectories named after the barcode they were binned into by the basecaller. You will need to move these directories (in exampe below) to a directory in the experiment pipeline. If you did not select the barcoding option for basecalling, but the samples are barcoded, then do the following for the fastq files produced by the basecalling. Note: we only work with files in the "pass" directory (if there is one).
 
 .. code-block:: bash
 
@@ -108,7 +109,7 @@ If you are working with multiplexed samples (barcoded) then your directory that 
 
 **Basecalling required**
 
-**NOTE**: Basecalling from this pipeline only supports Albacore. It is suggested you basecall with Guppy yourself as this will be much faster. The Albacore basecalling option is only provided for cases where Guppy is not working.  
+**NOTE**: Basecalling from this pipeline only supports Albacore. It is suggested you basecall with Guppy yourself as this will be much faster. The Albacore basecalling option is only provided for cases where Guppy is not working.
 
 If basecalling is required from the pipeline then you need to do two things. First, change the ``basecall`` field to ``true`` within the config file (see below). Second, move your fast5 files into the pipeline directory.
 
