@@ -4,3 +4,4 @@ containers/
 logs/
 .DS_Store
 report*.html
+Singularity.albacore
