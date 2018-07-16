@@ -1,3 +1,5 @@
+**This pipeline is archived and is now hosted and maintained at https://github.com/iqbal-lab-org/Mykrobe_tb_workflow**
+
 ========================================
 Analysis pipeline for *M. tuberculosis*
 ========================================
